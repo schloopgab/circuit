@@ -36,7 +36,7 @@ export const DAYS = {
       [
         [
           { id: "a1v2", name: "Hack Squat", detail: "3 × 10", eq: "Machine", flag: "knee", mod: "Moderate depth — stop above any pinch; keep heels flat." },
-          { id: "a2v2", name: "Incline Barbell Press", detail: "3 × 8", eq: "Barbell", flag: "shoulder", mod: "Moderate incline (~30°), elbows ~45° from torso." },
+          { id: "a2v2", name: "Cable Face Pull", detail: "3 × 15", eq: "Machine" },
           { id: "a3v2", name: "Cable Row, Wide Grip", detail: "3 × 12", eq: "Machine" },
           { id: "a4v2", name: "Hollow Body Hold", detail: "3 × 20s", eq: "Bodyweight" },
           { id: "a5v2", name: "Seated Calf Raise Machine", detail: "3 × 15", eq: "Machine" },
@@ -51,7 +51,7 @@ export const DAYS = {
         [
           { id: "a11v2", name: "Leg Curl Machine", detail: "3 × 12", eq: "Machine" },
           { id: "a12v2", name: "Cable Tricep Pushdown", detail: "3 × 15", eq: "Machine" },
-          { id: "a13v2", name: "Machine Shoulder Press", detail: "3 × 10, light", eq: "Machine", flag: "shoulder", mod: "Optional — light weight, half range if pressing overhead is achy." },
+          { id: "a13v2", name: "Cable External Rotation", detail: "3 × 15 ea. side", eq: "Machine" },
           { id: "a14v2", name: "Plank Shoulder Taps", detail: "3 × 10 ea. side", eq: "Bodyweight" },
           { id: "a15v2", name: "Hip Abduction Machine", detail: "3 × 12 ea. side", eq: "Machine" },
         ],
@@ -97,7 +97,7 @@ export const DAYS = {
         [
           { id: "a11v4", name: "Leg Extension Machine", detail: "3 × 12, light", eq: "Machine", flag: "knee", mod: "Optional — light weight, partial range, skip entirely if it aggravates." },
           { id: "a12v4", name: "Barbell Romanian Deadlift", detail: "3 × 8", eq: "Barbell" },
-          { id: "a13v4", name: "Standing Single-Arm Cable Press", detail: "3 × 10 ea. side", eq: "Machine", flag: "shoulder", mod: "Moderate weight, controlled path — stop if it pinches." },
+          { id: "a13v4", name: "Standing Single-Arm Cable Press", detail: "3 × 10 ea. side", eq: "Machine", flag: "shoulder", mod: "Set the cable at chest height — not overhead. Moderate weight, controlled path, stop if it pinches." },
           { id: "a14v4", name: "Plank", detail: "3 × 30s", eq: "Bodyweight" },
           { id: "a15v4", name: "Standing Calf Raise", detail: "3 × 15", eq: "Dumbbell" },
         ],
@@ -121,7 +121,7 @@ export const DAYS = {
         [
           { id: "b6", name: "Leg Extension Machine", detail: "3 × 12, light", eq: "Machine", flag: "knee", mod: "Optional — skip entirely if it aggravates; light weight, partial range." },
           { id: "b7", name: "Cable External Rotation", detail: "3 × 15 ea. side", eq: "Machine" },
-          { id: "b8", name: "Machine Shoulder Press", detail: "3 × 10, light", eq: "Machine", flag: "shoulder", mod: "Optional — skip if achy overhead; light weight, half range." },
+          { id: "b8", name: "Cable Face Pull", detail: "3 × 15", eq: "Machine" },
           { id: "b9", name: "Side Plank", detail: "3 × 20s ea. side", eq: "Bodyweight" },
           { id: "b10", name: "Barbell Hip Thrust", detail: "3 × 10", eq: "Barbell" },
         ],
@@ -136,7 +136,7 @@ export const DAYS = {
       [
         [
           { id: "b1v2", name: "Barbell Deadlift", detail: "3 × 6", eq: "Barbell" },
-          { id: "b2v2", name: "Incline Machine Press", detail: "3 × 10", eq: "Machine", flag: "shoulder", mod: "Moderate range, elbows ~45° from torso." },
+          { id: "b2v2", name: "Machine Chest Press", detail: "3 × 10", eq: "Machine", flag: "shoulder", mod: "Keep elbows slightly forward of your torso, moderate range." },
           { id: "b3v2", name: "Cable Face Pull", detail: "3 × 15", eq: "Machine" },
           { id: "b4v2", name: "Superman", detail: "3 × 12", eq: "Bodyweight" },
           { id: "b5v2", name: "Hip Adduction Machine", detail: "3 × 12 ea. side", eq: "Machine" },
@@ -144,7 +144,7 @@ export const DAYS = {
         [
           { id: "b6v2", name: "Leg Curl Machine", detail: "3 × 12", eq: "Machine" },
           { id: "b7v2", name: "Cable Internal/External Rotation", detail: "3 × 10 ea. side", eq: "Machine" },
-          { id: "b8v2", name: "Machine Shoulder Press", detail: "3 × 10, light", eq: "Machine", flag: "shoulder", mod: "Optional — skip if overhead pressing is achy." },
+          { id: "b8v2", name: "Cable Face Pull", detail: "3 × 15", eq: "Machine" },
           { id: "b9v2", name: "Side Plank", detail: "3 × 20s ea. side", eq: "Bodyweight" },
           { id: "b10v2", name: "Barbell Hip Thrust", detail: "3 × 10", eq: "Barbell" },
         ],
@@ -159,7 +159,7 @@ export const DAYS = {
       [
         [
           { id: "b1v3", name: "Barbell Back Squat", detail: "3 × 8", eq: "Barbell", flag: "knee", mod: "Moderate depth, controlled tempo — stop above any pinch." },
-          { id: "b2v3", name: "Incline Barbell Press", detail: "3 × 8", eq: "Barbell", flag: "shoulder", mod: "Moderate incline (~30°), elbows ~45° from torso." },
+          { id: "b2v3", name: "Cable Face Pull", detail: "3 × 15", eq: "Machine" },
           { id: "b3v3", name: "Cable Row, Wide Grip", detail: "3 × 12", eq: "Machine" },
           { id: "b4v3", name: "Dead Bug", detail: "3 × 10 ea. side", eq: "Bodyweight" },
           { id: "b5v3", name: "Hip Abduction Machine", detail: "3 × 12 ea. side", eq: "Machine" },
@@ -190,7 +190,7 @@ export const DAYS = {
         [
           { id: "b6v4", name: "Leg Curl Machine", detail: "3 × 12", eq: "Machine" },
           { id: "b7v4", name: "Seated Cable Row", detail: "3 × 12", eq: "Machine" },
-          { id: "b8v4", name: "Standing Single-Arm Cable Press", detail: "3 × 10 ea. side", eq: "Machine", flag: "shoulder", mod: "Moderate weight, controlled path — stop if it pinches." },
+          { id: "b8v4", name: "Standing Single-Arm Cable Press", detail: "3 × 10 ea. side", eq: "Machine", flag: "shoulder", mod: "Set the cable at chest height — not overhead. Moderate weight, controlled path, stop if it pinches." },
           { id: "b9v4", name: "Side Plank", detail: "3 × 20s ea. side", eq: "Bodyweight" },
           { id: "b10v4", name: "Cable External Rotation", detail: "3 × 15 ea. side", eq: "Machine" },
         ],
@@ -221,7 +221,7 @@ export const DAYS = {
         [
           { id: "c6", name: "Barbell Walking Lunge", detail: "3 × 8 ea. leg", eq: "Barbell", flag: "knee", mod: "Short step, shallow depth — no deep knee bend." },
           { id: "c7", name: "Cable External Rotation", detail: "3 × 12 ea. side", eq: "Machine" },
-          { id: "c8", name: "Machine Shoulder Press", detail: "3 × 10, light", eq: "Machine", flag: "shoulder", mod: "Optional — light weight, half range if pressing overhead is achy." },
+          { id: "c8", name: "Cable Face Pull", detail: "3 × 15", eq: "Machine" },
           { id: "c9", name: "Barbell Hip Thrust", detail: "3 × 10", eq: "Barbell" },
           { id: "c10", name: "Plank Shoulder Taps", detail: "3 × 10 ea. side", eq: "Bodyweight" },
         ],
@@ -236,7 +236,7 @@ export const DAYS = {
       [
         [
           { id: "c1v2", name: "Barbell Sumo Deadlift", detail: "3 × 6", eq: "Barbell" },
-          { id: "c2v2", name: "Incline Machine Press", detail: "3 × 10", eq: "Machine", flag: "shoulder", mod: "Moderate range, elbows ~45° from torso." },
+          { id: "c2v2", name: "Cable Face Pull", detail: "3 × 15", eq: "Machine" },
           { id: "c3v2", name: "Cable Row, Wide Grip", detail: "3 × 12", eq: "Machine" },
           { id: "c4v2", name: "Leg Press", detail: "3 × 10", eq: "Machine", flag: "knee", mod: "Don't lock out knees at the top; stop short of any pinch at the bottom." },
           { id: "c5v2", name: "Hollow Body Hold", detail: "3 × 20s", eq: "Bodyweight" },
@@ -251,7 +251,7 @@ export const DAYS = {
         [
           { id: "c11v2", name: "Cable Rear Delt Fly", detail: "3 × 15", eq: "Machine" },
           { id: "c12v2", name: "Leg Curl Machine", detail: "3 × 12", eq: "Machine" },
-          { id: "c13v2", name: "Machine Shoulder Press", detail: "3 × 10, light", eq: "Machine", flag: "shoulder", mod: "Optional — skip if overhead is achy." },
+          { id: "c13v2", name: "Cable External Rotation", detail: "3 × 15 ea. side", eq: "Machine" },
           { id: "c14v2", name: "Wall Sit", detail: "3 × 20s", eq: "Bodyweight", flag: "knee", mod: "Shallow angle only." },
           { id: "c15v2", name: "Plank Shoulder Taps", detail: "3 × 10 ea. side", eq: "Bodyweight" },
         ],
@@ -267,7 +267,7 @@ export const DAYS = {
         [
           { id: "c6v3", name: "Split Squat Hold", detail: "3 × 20s ea. leg", eq: "Bodyweight", flag: "knee", mod: "Quarter-depth only, no deep front-knee bend." },
           { id: "c7v3", name: "Cable External Rotation", detail: "3 × 12 ea. side", eq: "Machine" },
-          { id: "c8v3", name: "Machine Shoulder Press", detail: "3 × 10, light", eq: "Machine", flag: "shoulder", mod: "Optional — skip if achy overhead." },
+          { id: "c8v3", name: "Cable Face Pull", detail: "3 × 15", eq: "Machine" },
           { id: "c9v3", name: "Barbell Hip Thrust", detail: "3 × 10", eq: "Barbell" },
           { id: "c10v3", name: "Plank Shoulder Taps", detail: "3 × 10 ea. side", eq: "Bodyweight" },
         ],
@@ -296,7 +296,7 @@ export const DAYS = {
         ],
         [
           { id: "c11v4", name: "Leg Press", detail: "3 × 10", eq: "Machine", flag: "knee", mod: "Don't lock out knees at the top; stop short of any pinch at the bottom." },
-          { id: "c12v4", name: "Standing Single-Arm Cable Press", detail: "3 × 10 ea. side", eq: "Machine", flag: "shoulder", mod: "Moderate weight, controlled path — stop if it pinches." },
+          { id: "c12v4", name: "Standing Single-Arm Cable Press", detail: "3 × 10 ea. side", eq: "Machine", flag: "shoulder", mod: "Set the cable at chest height — not overhead. Moderate weight, controlled path, stop if it pinches." },
           { id: "c13v4", name: "Cable Tricep Pushdown", detail: "3 × 15", eq: "Machine" },
           { id: "c14v4", name: "Cable Woodchopper", detail: "3 × 10 ea. side", eq: "Machine" },
           { id: "c15v4", name: "Standing Calf Raise", detail: "3 × 15", eq: "Dumbbell" },
