@@ -27,10 +27,10 @@ export function HomeScreen({ history, onOpenDay }) {
     <div>
       <p style={{ color: colors.muted, fontSize: "14px", marginBottom: "20px", lineHeight: 1.5 }}>
         Three full-body circuits — legs, push, pull, and core all get hit in every session. Pick
-        whichever fits today, aim for 2–3 a week. Each one cycles through 4 different sets —
-        dumbbells/bands, then a full-gym set with barbells and machines — swapping to the next
-        set every Monday. Log a weight and the app starts coaching you on what to lift next time.
-        Tagged moves have a shoulder or knee note built in.
+        whichever fits today, aim for 2–3 a week. Each one cycles through 4 full-gym sets —
+        barbells, machines, and cables — swapping to the next set every Monday. Log a weight
+        and the app starts coaching you on what to lift next time. Tagged moves have a shoulder
+        or knee note built in.
       </p>
 
       <div
