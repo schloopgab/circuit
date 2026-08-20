@@ -1,5 +1,10 @@
 # Circuit
 
+**Live: https://schloopgab.github.io/circuit/** — open that on your phone
+and Add to Home Screen (iOS: Share → Add to Home Screen. Android: ⋮ menu →
+Add to Home Screen / Install app). It's a real installable PWA with offline
+support; nothing you log ever leaves your device (see Stack below).
+
 A full-body circuit workout tracker: three rotating circuits (each cycling
 through 4 exercise-variant sets week to week), shoulder/knee-aware exercise
 tagging, per-exercise weight logging with a simple progressive-overload
@@ -20,10 +25,20 @@ npm install
 npm run dev
 ```
 
-Then open the printed local URL. `npm run build` produces a static `dist/`
-you can deploy anywhere (Netlify, Vercel, GitHub Pages, etc.).
+Then open the printed local URL.
 
-## Using it on your phone (same Wi-Fi)
+## Deployment
+
+Pushing to `main` auto-deploys to GitHub Pages via
+`.github/workflows/deploy.yml` (build + `actions/deploy-pages`) — nothing
+manual needed beyond `git push`. Pages is configured with source "GitHub
+Actions" (already set on the repo).
+
+`vite.config.js`'s `base` is `/circuit/` only when the workflow sets
+`GITHUB_PAGES=true`; a plain local `npm run build` still resolves at `/`,
+so LAN/phone testing (below) isn't affected by the Pages subpath.
+
+## Using it on your phone over the same Wi-Fi (no deploy needed)
 
 The app is a PWA (installable, works offline once loaded) and the dev/preview
 servers already bind to this machine's LAN address, not just `localhost`.
@@ -43,11 +58,10 @@ servers already bind to this machine's LAN address, not just `localhost`.
 
 **Caveat:** this only works while the PC is on, `npm run preview` is
 running, and the phone is on the same network — the IP can also change if
-your router reassigns it. It's a fine way to try the app today; for
-anywhere/anytime access (and to unlock full offline support — Service
-Workers require HTTPS, which this plain-HTTP LAN setup doesn't have).
-deploying to Netlify/Vercel/GitHub Pages is the next step, and needs no
-further code changes to work once it's on a real HTTPS URL.
+your router reassigns it, and Service Workers need HTTPS to register (this
+plain-HTTP LAN setup doesn't have it, so offline support won't kick in here
+specifically). Mainly useful for testing a change before it's deployed —
+for actual daily use, the live GitHub Pages URL above is the one to use.
 
 ## Project structure
 
