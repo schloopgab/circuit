@@ -175,7 +175,10 @@ export default function CircuitApp() {
         style={{
           borderBottom: `1px solid ${colors.line}`,
           background: colors.surface,
-          padding: "20px 20px 16px",
+          // env(safe-area-inset-top) keeps this clear of the notch/Dynamic
+          // Island when installed full-screen on iOS (viewport-fit=cover in
+          // index.html is what makes the inset values non-zero).
+          padding: "calc(20px + env(safe-area-inset-top)) 20px 16px",
         }}
       >
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
@@ -223,7 +226,13 @@ export default function CircuitApp() {
         </div>
       </div>
 
-      <div style={{ padding: "20px", maxWidth: "560px", margin: "0 auto" }}>
+      <div
+        style={{
+          padding: "20px 20px calc(20px + env(safe-area-inset-bottom))",
+          maxWidth: "560px",
+          margin: "0 auto",
+        }}
+      >
         {screen === "home" && <HomeScreen history={history} onOpenDay={openDay} />}
         {screen === "workout" && activeDayId && activeRounds && (
           <WorkoutScreen

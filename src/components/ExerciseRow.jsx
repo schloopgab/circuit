@@ -97,13 +97,16 @@ export function ExerciseRow({ ex, isChecked, onToggle, weight, onWeightChange, c
               onChange={(e) => onWeightChange(e.target.value)}
               placeholder="—"
               style={{
-                width: "56px",
+                width: "64px",
                 background: colors.bg,
                 border: `1px solid ${colors.line}`,
                 borderRadius: "4px",
                 color: colors.chalk,
                 fontFamily: fonts.mono,
-                fontSize: "12px",
+                // iOS Safari auto-zooms the page on focus for any input
+                // under 16px — 12px looked right visually but made every
+                // weight entry jump-zoom on a phone. 16px avoids that.
+                fontSize: "16px",
                 padding: "4px 6px",
               }}
             />

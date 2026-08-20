@@ -1,0 +1,15 @@
+/* Matches theme.js colors.bg — kept in sync by hand since this file loads
+   before any JS runs (avoids a white flash on load, most visible on mobile
+   over a slow connection). */
+html,
+body {
+  background: #14181a;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+  /* Removes the gray flash Android/iOS browsers show on tap by default,
+     since every row already has its own :active/checked visual feedback. */
+  -webkit-tap-highlight-color: transparent;
+}
