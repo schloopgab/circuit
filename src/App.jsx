@@ -1,15 +1,18 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { storage } from "./storage.js";
-import { DAYS, currentRounds, variantIndexFor } from "./data/workouts.js";
+import { currentRounds, variantIndexFor } from "./data/workouts.js";
+import { generateProgram } from "./lib/generateProgram.js";
+import { loadProfile, saveProfile } from "./lib/profile.js";
 import { todayISO, isThisWeek, computeStreak } from "./lib/date.js";
 import { colors, fonts } from "./theme.js";
 import { ScoreStat } from "./components/ScoreStat.jsx";
 import { HomeScreen } from "./components/HomeScreen.jsx";
 import { WorkoutScreen } from "./components/WorkoutScreen.jsx";
 import { HistoryScreen } from "./components/HistoryScreen.jsx";
+import { Onboarding } from "./components/Onboarding.jsx";
 
 export default function CircuitApp() {
-  const [screen, setScreen] = useState("home"); // home | workout | history
+  const [screen, setScreen] = useState("home"); // home | workout | history | editProfile
   const [activeDayId, setActiveDayId] = useState(null);
   // The rounds/variant-label for the workout in progress are captured once,
   // when the workout is opened, rather than recomputed live from the current
@@ -22,6 +25,14 @@ export default function CircuitApp() {
   const [exerciseLog, setExerciseLog] = useState({}); // { exerciseId: [{date, weight}] }
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
+  // undefined = still loading; null = no saved profile yet (first run,
+  // show onboarding); object = ready.
+  const [profile, setProfile] = useState(undefined);
+
+  // Everyone's circuits are generated from their own profile instead of one
+  // hardcoded program — same generator, different answers in, different
+  // exercise picks out. Regenerates only when the profile itself changes.
+  const days = useMemo(() => (profile ? generateProgram(profile) : null), [profile]);
 
   const loadHistory = useCallback(async () => {
     try {
@@ -57,6 +68,7 @@ export default function CircuitApp() {
     loadHistory();
     loadWeights();
     loadExerciseLog();
+    loadProfile().then(setProfile);
   }, [loadHistory, loadWeights, loadExerciseLog]);
 
   const persistWeight = async (exId, value) => {
@@ -69,8 +81,14 @@ export default function CircuitApp() {
     }
   };
 
+  const saveProfileAndReturn = async (nextProfile) => {
+    await saveProfile(nextProfile);
+    setProfile(nextProfile);
+    setScreen("home");
+  };
+
   const openDay = (dayId) => {
-    const day = DAYS[dayId];
+    const day = days[dayId];
     const variantIdx = variantIndexFor(day);
     setActiveDayId(dayId);
     setActiveRounds(currentRounds(day));
@@ -87,7 +105,7 @@ export default function CircuitApp() {
     if (!activeDayId || !activeRounds || !history) return;
     setSaving(true);
     setError(null);
-    const day = DAYS[activeDayId];
+    const day = days[activeDayId];
     const total = activeRounds.flat().length;
     const done = Object.values(checked).filter(Boolean).length;
     const entry = {
@@ -161,6 +179,25 @@ export default function CircuitApp() {
   // labels used elsewhere in the app rather than a rolling 7*24h window.
   const weekCount = history ? history.filter((h) => isThisWeek(h.date)).length : 0;
 
+  // First-time visitor: nothing saved yet, so there's no program to show —
+  // onboarding replaces the whole screen (no nav away from it) until they
+  // answer once.
+  if (profile === null) {
+    return (
+      <div style={{ background: colors.bg, color: colors.chalk, minHeight: "100vh", fontFamily: fonts.body }}>
+        <div style={{ padding: "calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom))", maxWidth: "560px", margin: "0 auto" }}>
+          <Onboarding onSave={saveProfileAndReturn} />
+        </div>
+      </div>
+    );
+  }
+
+  // Still loading the saved profile — avoid a flash of onboarding for
+  // returning users while storage resolves.
+  if (profile === undefined || !days) {
+    return <div style={{ background: colors.bg, minHeight: "100vh" }} />;
+  }
+
   return (
     <div
       style={{
@@ -203,22 +240,40 @@ export default function CircuitApp() {
           >
             CIRCUIT<span style={{ color: colors.accent }}>.</span>
           </div>
-          <button
-            onClick={() => setScreen("history")}
-            style={{
-              background: "none",
-              border: `1px solid ${colors.line}`,
-              color: colors.muted,
-              fontFamily: fonts.mono,
-              fontSize: "11px",
-              letterSpacing: "0.08em",
-              padding: "6px 10px",
-              borderRadius: "3px",
-              cursor: "pointer",
-            }}
-          >
-            BOX SCORE
-          </button>
+          <div style={{ display: "flex", gap: "8px" }}>
+            <button
+              onClick={() => setScreen("editProfile")}
+              style={{
+                background: "none",
+                border: `1px solid ${colors.line}`,
+                color: colors.muted,
+                fontFamily: fonts.mono,
+                fontSize: "11px",
+                letterSpacing: "0.08em",
+                padding: "6px 10px",
+                borderRadius: "3px",
+                cursor: "pointer",
+              }}
+            >
+              PREFS
+            </button>
+            <button
+              onClick={() => setScreen("history")}
+              style={{
+                background: "none",
+                border: `1px solid ${colors.line}`,
+                color: colors.muted,
+                fontFamily: fonts.mono,
+                fontSize: "11px",
+                letterSpacing: "0.08em",
+                padding: "6px 10px",
+                borderRadius: "3px",
+                cursor: "pointer",
+              }}
+            >
+              BOX SCORE
+            </button>
+          </div>
         </div>
         <div style={{ display: "flex", gap: "20px", marginTop: "12px" }}>
           <ScoreStat label="STREAK" value={streak} unit="DAY" />
@@ -233,10 +288,10 @@ export default function CircuitApp() {
           margin: "0 auto",
         }}
       >
-        {screen === "home" && <HomeScreen history={history} onOpenDay={openDay} />}
+        {screen === "home" && <HomeScreen days={days} history={history} onOpenDay={openDay} />}
         {screen === "workout" && activeDayId && activeRounds && (
           <WorkoutScreen
-            day={DAYS[activeDayId]}
+            day={days[activeDayId]}
             rounds={activeRounds}
             variantLabel={activeVariantLabel}
             checked={checked}
@@ -251,6 +306,9 @@ export default function CircuitApp() {
         )}
         {screen === "history" && (
           <HistoryScreen history={history} onBack={() => setScreen("home")} onClear={clearHistory} />
+        )}
+        {screen === "editProfile" && (
+          <Onboarding initialProfile={profile} onSave={saveProfileAndReturn} onCancel={() => setScreen("home")} />
         )}
         {error && (
           <div style={{ color: colors.warn, fontSize: "13px", marginTop: "12px" }}>{error}</div>

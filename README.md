@@ -6,9 +6,34 @@ Add to Home Screen / Install app). It's a real installable PWA with offline
 support; nothing you log ever leaves your device (see Stack below).
 
 A full-body circuit workout tracker: three rotating circuits (each cycling
-through 4 exercise-variant sets week to week), shoulder/knee-aware exercise
-tagging, per-exercise weight logging with a simple progressive-overload
-"coach", and workout history with streaks.
+through 4 exercise-variant sets week to week), per-exercise weight logging
+with a simple progressive-overload "coach", and workout history with
+streaks.
+
+Every device gets its own program. First launch asks two questions — any
+joints to go easy on (shoulder/knee/lower back), and a goal (general
+fitness/strength/endurance) — and generates that person's three circuits
+from those answers. Nothing is shared between devices/browsers; profile,
+history, and weights all live in that browser's `localStorage` only. The
+questions are re-answerable any time via the PREFS button.
+
+## How programs are generated
+
+- `src/data/exercisePool.js` — the source material: ~48 exercises tagged
+  by movement pattern (squat/hinge/push/pull/core/accessory) and, where
+  relevant, joint risk + a caution note.
+- `src/lib/generateProgram.js` — pure function `(profile) -> the 3 circuits`.
+  Deterministic (no randomness) — round-robins through each pattern's
+  eligible pool as slots get filled, so variants stay varied without
+  literally repeating, and the same profile always yields the same
+  program. Overhead/incline pressing is excluded entirely when "shoulder"
+  is flagged (the single most commonly provocative pattern for shoulder
+  issues); knee/lower-back caution instead flags+caveats the relevant
+  exercises rather than removing them, since e.g. "no squats at all" isn't
+  usually the right call, "controlled/moderate-depth squats" often is.
+- Exercise `id`s are the pool's own stable ids (e.g. `barbell-back-squat`),
+  not slot-based — so weight history/coach trends for an exercise carry
+  over correctly no matter which circuit or week it shows up in.
 
 ## Stack
 
@@ -66,16 +91,20 @@ for actual daily use, the live GitHub Pages URL above is the one to use.
 ## Project structure
 
 ```
-index.html                Vite entry HTML; PWA/iOS meta tags
-vite.config.js             LAN host binding + PWA plugin config
-scripts/generate-icons.mjs One-off script that generated public/icons/*
-public/icons/               App icons (manifest + apple-touch-icon)
-src/main.jsx                 React root
-src/App.jsx                   Top-level state, screen routing
-src/theme.js                   Color/font tokens
-src/data/workouts.js            Circuit/exercise data + rotation logic
-src/lib/date.js                  Date/week/streak helpers
-src/lib/coach.js                  Progressive-overload suggestion logic
-src/components/*.jsx               Per-screen components
-src/storage.js                      localStorage persistence layer
+index.html                  Vite entry HTML; PWA/iOS meta tags
+vite.config.js               LAN host binding + PWA plugin config
+scripts/generate-icons.mjs    One-off script that generated public/icons/*
+public/icons/                  App icons (manifest + apple-touch-icon)
+src/main.jsx                    React root
+src/App.jsx                      Top-level state, screen routing, onboarding gate
+src/theme.js                      Color/font tokens
+src/data/exercisePool.js           The tagged exercise source material
+src/lib/generateProgram.js          Profile -> 3 circuits generator
+src/lib/profile.js                   Profile schema + load/save
+src/data/workouts.js                  Week-rotation logic + flag labels
+src/lib/date.js                        Date/week/streak helpers
+src/lib/coach.js                        Progressive-overload suggestion logic
+src/components/Onboarding.jsx            First-run questionnaire + PREFS editor
+src/components/*.jsx                      Other per-screen components
+src/storage.js                             localStorage persistence layer
 ```

@@ -1,4 +1,4 @@
-import { DAYS, currentRounds, variantIndexFor } from "../data/workouts.js";
+import { currentRounds, variantIndexFor } from "../data/workouts.js";
 import { lastWeekStartISO, weekStartISO, weekRangeLabel, dateShort } from "../lib/date.js";
 import { colors, fonts } from "../theme.js";
 
@@ -13,7 +13,7 @@ function onActivateKey(handler) {
   };
 }
 
-export function HomeScreen({ history, onOpenDay }) {
+export function HomeScreen({ days, history, onOpenDay }) {
   const lastDoneFor = (dayId) => {
     if (!history) return null;
     const found = history.find((h) => h.dayId === dayId);
@@ -29,8 +29,8 @@ export function HomeScreen({ history, onOpenDay }) {
         Three full-body circuits — legs, push, pull, and core all get hit in every session. Pick
         whichever fits today, aim for 2–3 a week. Each one cycles through 4 full-gym sets —
         barbells, machines, and cables — swapping to the next set every Monday. Log a weight
-        and the app starts coaching you on what to lift next time. Tagged moves have a shoulder
-        or knee note built in.
+        and the app starts coaching you on what to lift next time. Tagged moves carry a caution
+        note for whichever joints you flagged in Preferences.
       </p>
 
       <div
@@ -84,7 +84,7 @@ export function HomeScreen({ history, onOpenDay }) {
         ))}
       </div>
 
-      {Object.values(DAYS).map((day) => {
+      {Object.values(days).map((day) => {
         const last = lastDoneFor(day.id);
         const rounds = currentRounds(day);
         const exCount = rounds.flat().length;
